@@ -1,3 +1,7 @@
+module Map where
+
+
+
 data Field = 
             Wolf |
             Sheep Int |
@@ -6,6 +10,7 @@ data Field =
 --Stała Wielkość mapy
 mapSize = 8
 
+type Board = [Field]
 
 --Utils
 toInt :: Float -> Int
@@ -37,6 +42,18 @@ getPos n = ((n-1) `mod` mapSize + 1, 1 + quot (n-1) mapSize)
 
 getInd :: (Int, Int) -> Int    
 getInd (x, y) = (x-1)+(y-1)*mapSize + 1
+
+isEmpty::Field -> Bool
+isEmpty x = case x of
+            Wolf -> False
+            Sheep _->False
+            Empty->True 
+
+isWolf::Field -> Bool
+isWolf x = case x of
+            Wolf -> True
+            Sheep _->False
+            Empty->False 
 
 --checkFieldIfEmpty :: (Int, Int) -> Bool
 --checkFieldIfEmpty (x, y)  = let rGenerateStartMap n  
