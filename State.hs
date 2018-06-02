@@ -33,13 +33,3 @@ fieldExists::(Int,Int)-> Bool
 fieldExists (x,y)   | (1<=x)&&(x<=mapSize)&&(1<=y)&&(y<=mapSize)= True
                     | otherwise = False
 
---funkcja zwraca pozycję wilka
-findWolf:: Board -> (Int, Int)
-findWolf [] = error "Empty"
-findWolf ys = getPos (findWolf' ys 1)
-
---f pomocniacza
-findWolf':: Board -> Int -> Int 
-findWolf' [] _ = error "End"
-findWolf' (x:xs) i  | (isWolf x) = i
-                    | otherwise = findWolf' xs (i+1)
