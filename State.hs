@@ -19,17 +19,17 @@ quality':: Int->Int->Float--quality' Wysyokość Stopnieswobody
 quality' a b=0  --do przeróbki
 
 --funkcja zwracająca stopnie swobody danej pozycji (ile ma możliwości ruchu)
-degreesofFreedom:: (Int, Int) -> Board -> Int
+degreesofFreedom:: Position -> Board -> Int
 degreesofFreedom (x,y) bs = (degreeofFreedom leftUp bs) + (degreeofFreedom rightUp bs) + (degreeofFreedom leftDown bs)+ (degreeofFreedom rightDown bs)
     where leftUp = (x-1,y+1);rightUp=(x+1,y+1);leftDown=(x-1,y-1);rightDown=(x+1,y-1)
 
 --funkcja zwraca 1 jeżeli istnieje możliwośc przejścia na dane pole
-degreeofFreedom:: (Int,Int)->Board -> Int
+degreeofFreedom:: Position ->Board -> Int
 degreeofFreedom (x,y) bs    | (fieldExists (x,y))&&(isEmpty (bs!!(getInd (x,y)))) = 1 
                             | otherwise = 0
 
 --czy pole znajduje sie na planczy
-fieldExists::(Int,Int)-> Bool
+fieldExists:: Position-> Bool
 fieldExists (x,y)   | (1<=x)&&(x<=mapSize)&&(1<=y)&&(y<=mapSize)= True
                     | otherwise = False
 

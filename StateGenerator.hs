@@ -29,6 +29,7 @@ generateStateForSheep board index =
     in (genState moveLeftBoard) ++ (genState moveRightBoard) ++ generateStateForSheep board (index+1)
 
 --Funkcja generujaca wsyzstkie stany dla wilka
+generateStateWolfTurn :: Board -> [State]
 generateStateWolfTurn board = 
     let (oX, oY) = findWolf board 
         rightDownPos = (oX+1, oY+1)
@@ -44,6 +45,7 @@ generateStateWolfTurn board =
     in (genState boardRD) ++ (genState boardLD) ++ (genState boardRU) ++ (genState boardLU)
     
 --Funkcja poruszajaca gdy istnieje taka mozliwosc
+moveWithCheck :: Board -> Position -> Position -> Field -> Board
 moveWithCheck board oldPos newPos field =
     if degreeofFreedom newPos board == 1 then moveFromTo board oldPos newPos field else []  
 
