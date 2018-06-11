@@ -16,7 +16,7 @@ quality (State xs _) = quality' (snd position) (degreesofFreedom position xs)
 
 --f pomocnicza
 quality':: Int->Int->Float--quality' Wysyokość Stopnieswobody
-quality' a b=0  --do przeróbki
+quality' a b= (-3)*(fromIntegral a) + (fromIntegral b)
 
 --funkcja zwracająca stopnie swobody danej pozycji (ile ma możliwości ruchu)
 degreesofFreedom:: Position -> Board -> Int

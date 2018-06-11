@@ -29,9 +29,6 @@ drawRow xs _ 0 = ""
 drawRow xs 0 y = "\n" ++ drawRow xs mapSize (y-1)
 drawRow (x:xs) n y = drawField x ++ drawRow xs (n-1) y
 
-
- 
-
 --generowanie pustej planszy
 generateStartMap :: [Field]
 generateStartMap = let rGenerateStartMap n  | n == 2 || n == 4 || n == 6 || n == 8  = (Sheep (quot n 2) ):rGenerateStartMap (n+1) 
