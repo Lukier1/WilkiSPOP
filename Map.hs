@@ -32,7 +32,7 @@ drawRow (x:xs) n y = drawField x ++ drawRow xs (n-1) y
 --generowanie pustej planszy
 generateStartMap :: [Field]
 generateStartMap = let rGenerateStartMap n  | n == 2 || n == 4 || n == 6 || n == 8  = (Sheep (quot n 2) ):rGenerateStartMap (n+1) 
-                                            | n == 57 = (Wolf):rGenerateStartMap (n+1) 
+                                            | n == 59 = (Wolf):rGenerateStartMap (n+1) 
                                             | otherwise = (Empty):rGenerateStartMap (n+1)
                                             | n > (mapSize*mapSize) = []
                    in rGenerateStartMap (1)     
