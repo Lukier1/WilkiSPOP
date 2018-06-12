@@ -1,12 +1,11 @@
 module GameOptions where
 
+import InputOutput
 import Map
 import State
 import StateGenerator
 
-{-
- Moduł odpowiedzialny za logikę gry oraz interakcje z użytkownikiem.
--}
+--Moduł odpowiedzialny za logikę gry oraz interakcje z użytkownikiem.
 
 displayInitialMenu = "\nWybierz jedną z opcji:\n\
  \1. Rozpocznij nową grę\n\
@@ -42,16 +41,10 @@ runGameMenu = do
    putStr wrongOptionMessage
    runGameMenu
 
-{-
-Poniższe wydmuszki tylko zaznaczają logikę gry. Po ustaleniu poszczególnych kroków (patrz kwestie), wgram implementację.
--}
 startNewGame = do
  putStr "Wybrano opcję rozpoczęcia nowej gry. Przykładowa plansza początkowa:\n"
- -- Kwestia 1: tu moim zdaniem trzeba dać użytkownikowi opcję wskazania miejsc owiec na planszy. @Łukasz: 1. Czy miejsce początkowe wilka jest stałe? 2. Jak proponujesz umożliwić rozmieszczenie owiec?
  mapTest
- -- Kwestia 2: Tu wchodzi w grę algorytm. Wilk wykonuje swój ruch, a potem użytkownik decyduje gdzie ruszyć owce.
  runGameMenu
- -- Kwestia 3: Po każdym ruchu (owca + wilk) proponuję wyświetlać opcje gry. Moim zdaniem tak będzie zgodnie z wymaganiami. Co wy na to?
 
 stopGame = do
  putStr "Zatrzymano grę. By wznowić naciśnij dowolny klawisz.\n"
@@ -59,13 +52,12 @@ stopGame = do
  resumeGame
 
 resumeGame = do
- putStr "Powrócono do gry.\n"
- -- Kwestia 4: tu chcę wrzucić opcję 
- runGameMenu -- do wyrzucenia. Pozostawiłem tylko by zachować ciągłość po uruchomieniu programu
+ putStrLn "By powrócić do gry, proszę nacisnąć klawisz"
+ getLine
+ runGameMenu -- Tu zamiast menu gry wrzucimy powrócenie do porzedniego stanu jak już będzie dodany algorytm gry.
 
 saveGame = do
- putStr "Zapisano grę do pliku ...\n"
- -- tu będzie zapisanie aktualnego stanu gry do pliku
+ saveGameToFile testTable
  resumeGame
 
 loadSavedGame = do

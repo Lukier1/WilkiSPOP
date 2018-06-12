@@ -5,7 +5,7 @@ import Data.List
 data Field = 
             Wolf |
             Sheep Int |
-            Empty
+            Empty deriving (Show)
 
 --Stała Wielkość mapy
 mapSize = 8
@@ -32,21 +32,21 @@ drawRow (x:xs) n y = drawField x ++ drawRow xs (n-1) y
 --generowanie pustej planszy
 generateStartMap :: [Field]
 generateStartMap = let rGenerateStartMap n  | n == 2 || n == 4 || n == 6 || n == 8  = (Sheep (quot n 2) ):rGenerateStartMap (n+1) 
-                                            | n == 59 = (Wolf):rGenerateStartMap (n+1) 
+                                            | n == 57 = (Wolf):rGenerateStartMap (n+1) 
                                             | otherwise = (Empty):rGenerateStartMap (n+1)
                                             | n > (mapSize*mapSize) = []
                    in rGenerateStartMap (1)     
 
---Przeliczanie indeks -> poyzcja na planszy
+--Przeliczanie indeksu -> pozycja na planszy
 getPos :: Int -> Position  
 getPos n = ((n-1) `mod` mapSize + 1, 1 + quot (n-1) mapSize)
 
---Przeliczanie pozycja -> indeks na planszy
+--Przeliczanie pozycji -> indeks na planszy
 getInd :: Position -> Int    
 getInd (x, y) = (x-1)+(y-1)*mapSize + 1
 
 
---Sprawdzanie zawartosci pól
+--Sprawdzanie zawartości pól
 isEmpty::Field -> Bool
 isEmpty x = case x of
             Empty -> True
@@ -64,7 +64,7 @@ isSheep x index = case x of
 
 
 
---funkcja zwraca pozycje owcy o podanym indeksie
+--funkcja zwraca pozycję owcy o podanym indeksie
 findSheep :: Board -> Int -> Position
 findSheep board index = case findIndex  (\x -> isSheep x index)  board of
                             Just ind ->  getPos (ind+1)  
@@ -76,7 +76,7 @@ findWolf:: Board -> (Int, Int)
 findWolf [] = error "Empty"
 findWolf ys = getPos (findWolf' ys 1)
 
---f pomocniacza
+--f pomocnicza
 findWolf':: Board -> Int -> Int 
 findWolf' [] _ = error "End"
 findWolf' (x:xs) i  | (isWolf x) = i
@@ -87,7 +87,7 @@ changeField board pos field =
     let ind = getInd pos 
     in take (ind-1) board ++ [field] ++ drop (ind) board
 
---Funkcje slużace do poruszania, nie sprawdzaja poprawnosci wprowadzonych danych
+--Funkcje służace do poruszania, nie sprawdzają poprawności wprowadzonych danych
 moveFromTo :: Board -> Position -> Position -> Field -> Board
 moveFromTo board (oX, oY) (nX, nY) field = 
     let cleanBoard = changeField board (oX, oY) Empty
