@@ -11,4 +11,4 @@ import GameOptions
 
 main = do
  putStrLn "\nWitamy w grze Wilk i Owce. Zapraszamy do gry!"
- runGame
+ runMainMenu

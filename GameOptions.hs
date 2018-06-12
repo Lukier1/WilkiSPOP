@@ -20,9 +20,7 @@ displayGameMenu = "Wybierz jedną z opcji:\n\
  \M - Wróć do głównego menu programu (uwaga! kasuje obecny stan gry)\n\ 
  \Q - Wyjdź z gry\n"
 
-runGame = runMainMenu startGameState
-
-runMainMenu lastState = do 
+runMainMenu = do 
  putStrLn displayInitialMenu
  selectedOption <- getLine
  case selectedOption of
@@ -31,7 +29,7 @@ runMainMenu lastState = do
   "3" -> exitGame
   _ -> do
    putStr wrongOptionMessage
-   runMainMenu lastState
+   runMainMenu
 
 runGameMenu stateGame = do 
  putStr displayGameMenu
@@ -44,12 +42,13 @@ runGameMenu stateGame = do
   "4" -> moveSheepMenu stateGame 4
   "S" -> stopGame stateGame
   "W" -> saveGame stateGame
-  "M" -> runMainMenu stateGame
+  "M" -> runMainMenu
   "Q" -> exitGame
   _ -> do
    putStr wrongOptionMessage
    runGameMenu stateGame
 
+-- Stan w ktorym sterowana jest pojednycza owca
 moveSheepMenu stateGame sheepInd = do 
     putStr $ "Move sheep " ++ show sheepInd ++ "\n\tP - ruch w prawo\n\tL - ruch w lewo\n\tother input - powroc do wyboru owcy\n"  
     selectedMove <- getLine
@@ -58,6 +57,8 @@ moveSheepMenu stateGame sheepInd = do
         "L" -> moveIfPossible stateGame sheepInd (-1, 1)
         _ -> runGameMenu stateGame
 
+--porusz owce jesli to mozliwe w innym przypadku wywala blad i wraca do stanu wyboru owcy
+--po poruszeniu owcy uruchamia minmax i AI porusza wilka, a nastepniep przechodzi do stanu wyboru owcy
 moveIfPossible (State board turn) sheepInd (x, y) =  
     let (oX, oY) = findSheep board sheepInd
         newPos = (oX+x, oY+y)

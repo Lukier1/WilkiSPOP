@@ -5,13 +5,25 @@ import Data.List
 data Field = 
             Wolf |
             Sheep Int |
-            Empty deriving (Show)
+            Empty
 
 --Stała Wielkość mapy
 mapSize = 8
 
 type Board = [Field]
 type Position = (Int, Int)
+
+loadMap :: String -> [Field]
+loadMap (x:xs) = case x of 
+                'x' -> (Wolf):loadMap xs 
+                '1' -> (Sheep 1):loadMap xs
+                '2' -> (Sheep 2):loadMap xs 
+                '3' -> (Sheep 3):loadMap xs 
+                '4' -> (Sheep 4):loadMap xs 
+                '-' -> (Empty):loadMap xs
+                '\n'-> loadMap xs
+                _ -> error "Nieprawidlowa mapa"
+loadMap [] = []
 
 -- Wypluwa string zawierajcy mape
 drawMap :: [Field] -> String
@@ -110,4 +122,6 @@ startMap = generateStartMap
 mapTest = do   
             putStrLn $ drawMap generateStartMap
             putStrLn $ show $ findSheep generateStartMap 3     
-            
+
+loadTest = do 
+            putStrLn $ drawMap $ loadMap $ drawMap generateStartMap

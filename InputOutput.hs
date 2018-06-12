@@ -12,4 +12,4 @@ saveGameToFile gameBoard = do
  putStrLn "Zapisano grę do pliku."
 
 saveToFile :: Board -> FilePath -> IO ()
-saveToFile gameBoard filePath = writeFile filePath (show gameBoard)
+saveToFile gameBoard filePath = writeFile filePath (drawMap gameBoard)
