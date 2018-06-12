@@ -25,7 +25,7 @@ degreesofFreedom (x,y) bs = (degreeofFreedom leftUp bs) + (degreeofFreedom right
 
 --funkcja zwraca 1 jeżeli istnieje możliwośc przejścia na dane pole
 degreeofFreedom:: Position ->Board -> Int
-degreeofFreedom (x,y) bs    | (fieldExists (x,y))&&(isEmpty (bs!!(getInd (x,y)))) = 1 
+degreeofFreedom (x,y) bs    | (fieldExists (x,y))&&(isEmpty (bs!!(getInd (x,y) - 1))) = 1 
                             | otherwise = 0
 
 --czy pole znajduje sie na planczy
@@ -33,3 +33,8 @@ fieldExists:: Position-> Bool
 fieldExists (x,y)   | (1<=x)&&(x<=mapSize)&&(1<=y)&&(y<=mapSize)= True
                     | otherwise = False
 
+--stan poczatkowy gry
+startGameState = (State generateStartMap WolfTurn)
+
+--wyrzuca Stringa przechowujacego stan mapy dla podanego stanu
+drawStateMap (State xs _) = drawMap xs
