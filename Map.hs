@@ -125,3 +125,6 @@ mapTest = do
 
 loadTest = do 
             putStrLn $ drawMap $ loadMap $ drawMap generateStartMap
+
+
+

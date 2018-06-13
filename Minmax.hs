@@ -36,11 +36,6 @@ alphaBethaSheep depth alpha betha (x:xs) | alpha >= newBetha = alpha
                                          | otherwise = alphaBethaSheep depth alpha newBetha xs
                                     where newBetha = min betha (alphaBetha (depth-1) alpha betha x)                             
 
-
-endState::State -> Bool
-endState (State board turn) = ((degreesofFreedom (findWolf board) board) == 0) || ((snd (findWolf board)) == 1)
-
-
 isWolfTurn::Turn -> Bool
 isWolfTurn x = case x of
             WolfTurn -> True
@@ -53,4 +48,23 @@ mapMax f (x:xs) =
          maxNr = maximum list
     in (x:xs)!!(fromJust (findIndex (==maxNr) list))
 
-minmaxtest = statePrint (getNextWolfsMove (State startMap WolfTurn))
+
+
+
+--Tests
+minmaxtest = statePrint (getNextWolfsMove (State wilkMapTest WolfTurn))
+
+wilkMapTest =   let rGenerateStartMap n     | n == 11 || n == 4 || n == 6 || n == 8  = (Sheep (quot n 2) ):rGenerateStartMap (n+1) 
+                                            | n == 9 = (Wolf):rGenerateStartMap (n+1) 
+                                            | otherwise = (Empty):rGenerateStartMap (n+1)
+                                            | n > (mapSize*mapSize) = []
+                in rGenerateStartMap (1)
+
+startState = (State wilkMapTest WolfTurn)
+
+statesWolf = stateGenerateFromState startState
+
+statesSheep1 = stateGenerateFromState (statesWolf!!0)
+statesSheep2 = stateGenerateFromState (statesWolf!!1)
+
+albe = \x y -> alphaBetha x minv pinv y

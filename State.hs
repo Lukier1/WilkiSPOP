@@ -11,12 +11,14 @@ data State = State Board Turn
 --funkcja zwracająca jakośc stanu
 quality :: State -> Float
 quality (State [] _) = 0
-quality (State xs _) = quality' (snd position) (degreesofFreedom position xs)
+quality (State xs y)    | endWolfWon (State xs y) = 999
+                        | endSheepWon (State xs y) = -999
+                        | otherwise = quality' (snd position) (degreesofFreedom position xs)
     where position = findWolf xs
 
 --f pomocnicza
 quality':: Int->Int->Float--quality' Wysyokość Stopnieswobody
-quality' a b= (-3)*(fromIntegral a) + (fromIntegral b)
+quality' a b = (-3)*(fromIntegral a) + (fromIntegral b)
 
 --funkcja zwracająca stopnie swobody danej pozycji (ile ma możliwości ruchu)
 degreesofFreedom:: Position -> Board -> Int
@@ -38,3 +40,16 @@ startGameState = (State generateStartMap WolfTurn)
 
 --wyrzuca Stringa przechowujacego stan mapy dla podanego stanu
 drawStateMap (State xs _) = drawMap xs
+
+
+--czy jest to koniec gry
+endState::State -> Bool
+endState x = (endWolfWon x) || (endSheepWon x)
+
+endWolfWon::State->Bool
+endWolfWon (State board _) = ((snd (findWolf board)) == 1)
+
+endSheepWon::State -> Bool
+endSheepWon (State board _) = ((degreesofFreedom (findWolf board) board) == 0)
+
+

@@ -55,6 +55,8 @@ moveSheepMenu stateGame sheepInd = do
     case selectedMove of 
         "P" -> moveIfPossible stateGame sheepInd (1, 1)
         "L" -> moveIfPossible stateGame sheepInd (-1, 1)
+        "p" -> moveIfPossible stateGame sheepInd (1, 1)
+        "l" -> moveIfPossible stateGame sheepInd (-1, 1)
         _ -> runGameMenu stateGame
 
 --porusz owce jesli to mozliwe w innym przypadku wywala blad i wraca do stanu wyboru owcy
