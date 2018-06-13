@@ -46,6 +46,15 @@ drawStateMap (State xs _) = drawMap xs
 endState::State -> Bool
 endState x = (endWolfWon x) || (endSheepWon x)
 
+findWolfWon::[State]->State
+findWolfWon (x:xs)  | endWolfWon x = x
+                    | otherwise = findWolfWon xs
+
+endWolfWonList::[State]->Bool
+endWolfWonList [] = False
+endWolfWonList (x:xs)   | endWolfWon x = True
+                        | otherwise = endWolfWonList xs
+
 endWolfWon::State->Bool
 endWolfWon (State board _) = ((snd (findWolf board)) == 1)
 

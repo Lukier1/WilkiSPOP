@@ -12,9 +12,10 @@ depthGlob = 4
 
 --funkcja zwracająca najlepsze posunięcie dla wilka
 getNextWolfsMove :: State -> State
-getNextWolfsMove (State board turn) | length states > 1 = mapMax (alphaBetha depthGlob minv pinv) states 
-                                    | otherwise = states!!0
-    where states = stateGenerateFromState (State board turn)
+getNextWolfsMove (State board turn) | length states == 1 = states!!0
+                                    | endWolfWonList states = findWolfWon states
+                                    | length states > 1 = mapMax (alphaBetha depthGlob minv pinv) states 
+                                where states = stateGenerateFromState (State board turn)
 
 --algorytm alfa beta
 alphaBetha :: Int -> Float -> Float -> State -> Float
@@ -54,7 +55,7 @@ mapMax f (x:xs) =
 --Tests
 minmaxtest = statePrint (getNextWolfsMove (State wilkMapTest WolfTurn))
 
-wilkMapTest =   let rGenerateStartMap n     | n == 11 || n == 4 || n == 6 || n == 8  = (Sheep (quot n 2) ):rGenerateStartMap (n+1) 
+wilkMapTest =   let rGenerateStartMap n     | n == 11 || n == 4 || n == 6 || n == 8  = (Sheep ((quot n 2) `mod` 4 + 1) ):rGenerateStartMap (n+1) 
                                             | n == 9 = (Wolf):rGenerateStartMap (n+1) 
                                             | otherwise = (Empty):rGenerateStartMap (n+1)
                                             | n > (mapSize*mapSize) = []
