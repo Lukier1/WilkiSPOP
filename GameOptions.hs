@@ -65,10 +65,18 @@ moveIfPossible (State board turn) sheepInd (x, y) =
     let (oX, oY) = findSheep board sheepInd
         newPos = (oX+x, oY+y)
         moveBoard = moveWithCheck board (oX, oY) newPos (Sheep sheepInd)
+        newState = (State moveBoard WolfTurn)
+        foundState = getNextWolfsMove newState
     in do case moveBoard of [] ->   do  putStr "Nie mozna poruszyc owcy na to pole!\n" -- w tym przyapdku plansza nie zostalo stworzona, wiec zly ruch
                                         runGameMenu (State board turn)
-                            _ -> runGameMenu $ getNextWolfsMove (State moveBoard WolfTurn) 
-        
+                            _ -> do if endSheepWon newState then 
+                                        endGame newState
+                                    else
+                                        do  if endWolfWon foundState then 
+                                                endGame foundState
+                                            else
+                                                runGameMenu foundState  
+                                  
 startNewGame = do
  putStr "Wybrano opcję rozpoczęcia nowej gry. Przykładowa plansza początkowa:\n"
  runGameMenu startGameState
@@ -95,5 +103,11 @@ loadSavedGame = do
 exitGame = do
  putStr "Dziękujemy za wspólną grę. Do zobaczenia!\n"
  return()
+
+endGame (State board turn) = case turn of 
+                        WolfTurn -> do  putStr "Wygrałeś!\n"
+                                        runMainMenu
+                        SheepsTurn -> do putStr "Przegrałeś!\n"
+                                         runMainMenu
 
 wrongOptionMessage = "Wybrano nieprawidłową opcję z menu. Proszę spróbować jeszcze raz.\n"
