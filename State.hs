@@ -46,18 +46,22 @@ drawStateMap (State xs _) = drawMap xs
 endState::State -> Bool
 endState x = (endWolfWon x) || (endSheepWon x)
 
+--zwróć stan wygrywający wilka
 findWolfWon::[State]->State
 findWolfWon (x:xs)  | endWolfWon x = x
                     | otherwise = findWolfWon xs
 
+--czy istnieje stan wygrywający wilka
 endWolfWonList::[State]->Bool
 endWolfWonList [] = False
 endWolfWonList (x:xs)   | endWolfWon x = True
                         | otherwise = endWolfWonList xs
 
+--czy stan jest wygrywający wilka
 endWolfWon::State->Bool
 endWolfWon (State board _) = ((snd (findWolf board)) == 1)
 
+--czy stan jest wygrywający owcy
 endSheepWon::State -> Bool
 endSheepWon (State board _) = ((degreesofFreedom (findWolf board) board) == 0)
 

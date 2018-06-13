@@ -24,25 +24,27 @@ alphaBetha depth alpha betha (State board turn) | (depth <= 0) || endState (Stat
                                                 | otherwise = alphaBethaSheep depth alpha betha states
                                             where states = stateGenerateFromState (State board turn)
                                                                            
-
+--alfabetha dla wilka (MAX)
 alphaBethaWolf :: Int -> Float -> Float -> [State] -> Float
 alphaBethaWolf depth alpha betha [] = alpha
 alphaBethaWolf depth alpha betha (x:xs) | newAlpha >= betha = betha
                                         | otherwise = alphaBethaWolf depth newAlpha betha xs
                                     where newAlpha = max alpha (alphaBetha (depth-1) alpha betha x) 
-                               
+            
+--alphabetha dla owcy (MIN)
 alphaBethaSheep :: Int -> Float -> Float -> [State] -> Float
 alphaBethaSheep depth alpha betha [] = betha
 alphaBethaSheep depth alpha betha (x:xs) | alpha >= newBetha = alpha
                                          | otherwise = alphaBethaSheep depth alpha newBetha xs
                                     where newBetha = min betha (alphaBetha (depth-1) alpha betha x)                             
 
+--czy to runda wilka
 isWolfTurn::Turn -> Bool
 isWolfTurn x = case x of
             WolfTurn -> True
             _-> False
 
-
+--zamapuj funkcje f i zwróc element ją maksymalizującą
 mapMax :: (t -> Float) -> [t] -> t
 mapMax f (x:xs) = 
     let  list = map f (x:xs)
