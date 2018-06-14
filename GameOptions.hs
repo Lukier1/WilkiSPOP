@@ -25,7 +25,7 @@ runMainMenu = do
  selectedOption <- getLine
  case selectedOption of
   "1" -> startNewGame
-  "2" -> loadSavedGame
+  "2" -> loadSavedGame --2 saveGame
   "3" -> exitGame
   _ -> do
    putStr wrongOptionMessage
@@ -98,7 +98,11 @@ saveGame (State map turn) = do
 loadSavedGame = do
  loadGameFromFile
  resumeGame startGameState -- do zmiany startGameState na aktualny stan gry z pliku (załadować lastState z pliku)
-
+{-
+loadSavedGame2 stateGame = do
+ loadGameFromFile
+ resumeGame stateGame
+-}
 exitGame = do
  putStr "Dziękujemy za wspólną grę. Do zobaczenia!\n"
  return()

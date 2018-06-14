@@ -1,7 +1,9 @@
 module InputOutput where
 
 import System.IO
+import System.Directory
 import Map
+--import GameOptions
 
 -- moduł obsługujący operacje I/O
 
@@ -17,10 +19,17 @@ saveToFile gameBoard filePath = writeFile filePath (drawMap gameBoard)
 loadGameFromFile = do
  putStrLn "Proszę podać nazwę pliku z zapisaną grą do wczytania:" 
  savedFile <- getLine
- --loadedFile <- loadFromFile savedFile
- putStrLn $ "Gra z pliku: " ++ savedFile 
- printFromSavedFile savedFile
- putStrLn "Poprawnie wczytano grę z pliku.\n"
+ fileCheck <- doesFileExist savedFile
+ 
+ if (fileCheck)
+  then do 
+   putStrLn $ "Gra z pliku: " ++ savedFile 
+   printFromSavedFile savedFile
+   --loadedFile <- loadFromFile savedFile
+   putStrLn "Poprawnie wczytano grę z pliku.\n"
+  else do
+   putStrLn $ "Nie znaleziono pliku " ++ savedFile ++ ". Proszę spróbować jeszcze raz.\n"
+   loadGameFromFile
 
 {-
 loadFromFile :: String -> IO Board
