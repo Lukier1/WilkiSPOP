@@ -49,4 +49,9 @@ moveWithCheck :: Board -> Position -> Position -> Field -> Board
 moveWithCheck board oldPos newPos field =
     if degreeofFreedom newPos board == 1 then moveFromTo board oldPos newPos field else []  
 
+
+turnPrint turn =  case turn of
+    WolfTurn -> "Wilcza tura"
+    SheepsTurn -> "Owcza tura"
+    
 statePrint (State board turn) = drawMap board ++ "\nTura:" ++ turnPrint turn
