@@ -13,7 +13,7 @@ mapSize = 8
 type Board = [Field]
 type Position = (Int, Int)
 
-loadMap :: String -> [Field]
+loadMap :: String -> Board
 loadMap (x:xs) = case x of 
                 'x' -> (Wolf):loadMap xs 
                 '1' -> (Sheep 1):loadMap xs
@@ -22,6 +22,8 @@ loadMap (x:xs) = case x of
                 '4' -> (Sheep 4):loadMap xs 
                 '-' -> (Empty):loadMap xs
                 '\n'-> loadMap xs
+                '\0'-> loadMap xs
+                ' ' -> loadMap xs
                 _ -> error "Nieprawidlowa mapa"
 loadMap [] = []
 

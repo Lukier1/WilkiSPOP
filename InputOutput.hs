@@ -16,38 +16,18 @@ saveGameToFile gameBoard = do
 saveToFile :: Board -> FilePath -> IO ()
 saveToFile gameBoard filePath = writeFile filePath (drawMap gameBoard)
 
+
+loadGameFromFile :: IO(Board)
 loadGameFromFile = do
- putStrLn "Proszę podać nazwę pliku z zapisaną grą do wczytania:" 
- savedFile <- getLine
- fileCheck <- doesFileExist savedFile
- 
- if (fileCheck)
-  then do 
-   putStrLn $ "Gra z pliku: " ++ savedFile 
-   printFromSavedFile savedFile
-   --loadedFile <- loadFromFile savedFile
-   putStrLn "Poprawnie wczytano grę z pliku.\n"
-  else do
-   putStrLn $ "Nie znaleziono pliku " ++ savedFile ++ ". Proszę spróbować jeszcze raz.\n"
-   loadGameFromFile
-
-{-
-loadFromFile :: String -> IO Board
-loadFromFile savedFile =
- withFile savedFile ReadMode (\handle -> do
- fileContent <- hGetContents handle
- readIO fileContent)
--}
-
--- tymczasowe 'śmieci": do wyrzucenia później ...
-
-printFromSavedFile :: String -> IO ()
-printFromSavedFile savedFile =
- withFile savedFile ReadMode (\handle -> do
- fileContent <- hGetContents handle
- putStrLn fileContent)
-
-{-
-instance Board where
- readIO ::  Board -> [Field]
--}
+    putStrLn "Proszę podać nazwę pliku z zapisaną grą do wczytania:" 
+    savedFile <- getLine
+    fileCheck <- doesFileExist savedFile 
+    if (fileCheck)
+    then do 
+        putStrLn $ "Gra z pliku: " ++ savedFile 
+        content <- readFile savedFile
+        putStrLn "Poprawnie wczytano grę z pliku.\n"
+        return (loadMap content)
+    else do
+        putStrLn $ "Nie znaleziono pliku " ++ savedFile ++ ". Proszę spróbować jeszcze raz.\n"
+        loadGameFromFile

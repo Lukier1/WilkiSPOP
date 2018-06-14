@@ -96,13 +96,9 @@ saveGame (State map turn) = do
  resumeGame (State map turn)
 
 loadSavedGame = do
- loadGameFromFile
- resumeGame startGameState -- do zmiany startGameState na aktualny stan gry z pliku (załadować lastState z pliku)
-{-
-loadSavedGame2 stateGame = do
- loadGameFromFile
- resumeGame stateGame
--}
+ loadedBoard <- loadGameFromFile
+ resumeGame (State loadedBoard SheepsTurn)
+
 exitGame = do
  putStr "Dziękujemy za wspólną grę. Do zobaczenia!\n"
  return()
