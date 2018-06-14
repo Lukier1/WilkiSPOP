@@ -49,24 +49,4 @@ moveWithCheck :: Board -> Position -> Position -> Field -> Board
 moveWithCheck board oldPos newPos field =
     if degreeofFreedom newPos board == 1 then moveFromTo board oldPos newPos field else []  
 
---------------------------------------------------------
---Testowe funkcje
-statesPrint :: [State] -> String
-statesPrint [] = ""
-statesPrint (x:xs) = ",\n" ++ statePrint(x) ++ statesPrint(xs)
-
-turnPrint turn =  case turn of
-    WolfTurn -> "Wilcza tura"
-    SheepsTurn -> "Owcza tura"
-
 statePrint (State board turn) = drawMap board ++ "\nTura:" ++ turnPrint turn
-
-testGenerator =  
-    let 
-        state1 = (State generateStartMap WolfTurn)
-        state2 = stateGenerateFromState state1
-        state3 = stateGenerateFromState $ head $ state2
-        state4 = stateGenerateFromState $ head $ state3
-    in
-        do         
-            putStr $ statesPrint ([state1]++state2++state3++state4)

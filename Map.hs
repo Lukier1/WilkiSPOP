@@ -115,18 +115,4 @@ moveSheep board index (x,y) =
     in moveFromTo board (oX, oY) newPos (Sheep index)
 
 
---Testowe funkcje
-testTable :: Board
-testTable = [Wolf, Empty, Empty, (Sheep 2), Empty, Empty, Empty, Empty, (Sheep 1)]
-
-startMap = generateStartMap
-
-mapTest = do   
-            putStrLn $ drawMap generateStartMap
-            putStrLn $ show $ findSheep generateStartMap 3     
-
-loadTest = do 
-            putStrLn $ drawMap $ loadMap $ drawMap generateStartMap
-
-
 
