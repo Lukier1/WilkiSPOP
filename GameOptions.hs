@@ -33,6 +33,7 @@ runMainMenu = do
 
 runGameMenu stateGame = do 
  putStr displayGameMenu
+ putStrLn "\nAktualny stan gry to:"
  putStr $ drawStateMap $ stateGame 
  selectedGameOption <- getLine
  case selectedGameOption of
@@ -60,14 +61,14 @@ moveSheepMenu stateGame sheepInd = do
         _ -> runGameMenu stateGame
 
 --porusz owce jesli to mozliwe w innym przypadku wywala blad i wraca do stanu wyboru owcy
---po poruszeniu owcy uruchamia minmax i AI porusza wilka, a nastepniep przechodzi do stanu wyboru owcy
+--po poruszeniu owcy uruchamia minmax i AI porusza wilka, a nastepnie przechodzi do stanu wyboru owcy
 moveIfPossible (State board turn) sheepInd (x, y) =  
     let (oX, oY) = findSheep board sheepInd
         newPos = (oX+x, oY+y)
         moveBoard = moveWithCheck board (oX, oY) newPos (Sheep sheepInd)
         newState = (State moveBoard WolfTurn)
         foundState = getNextWolfsMove newState
-    in do case moveBoard of [] ->   do  putStr "Nie mozna poruszyc owcy na to pole!\n" -- w tym przyapdku plansza nie zostalo stworzona, wiec zly ruch
+    in do case moveBoard of [] ->   do  putStr "Nie mozna poruszyc owcy na to pole!\n" -- w tym przypadku plansza nie zostalo stworzona, wiec zly ruch
                                         runGameMenu (State board turn)
                             _ -> do if endSheepWon newState then 
                                         endGame newState
@@ -78,7 +79,7 @@ moveIfPossible (State board turn) sheepInd (x, y) =
                                                 runGameMenu foundState  
                                   
 startNewGame = do
- putStr "Wybrano opcję rozpoczęcia nowej gry. Przykładowa plansza początkowa:\n"
+ putStr "Wybrano opcję rozpoczęcia nowej gry."
  runGameMenu startGameState
 
 stopGame lastState = do
@@ -87,9 +88,8 @@ stopGame lastState = do
  resumeGame lastState
 
 resumeGame lastState = do
- putStrLn "By powrócić do gry, proszę nacisnąć klawisz"
- getLine
- runGameMenu lastState -- Tu zamiast menu gry wrzucimy powrócenie do porzedniego stanu jak już będzie dodany algorytm gry.
+ putStrLn "Powrócono do gry."
+ runGameMenu lastState
 
 saveGame (State map turn) = do
  saveGameToFile map

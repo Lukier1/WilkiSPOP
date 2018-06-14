@@ -8,7 +8,7 @@ data Turn = WolfTurn | SheepsTurn
 --definicja stanu
 data State = State Board Turn
 
---funkcja zwracająca jakośc stanu
+--funkcja zwracająca jakość stanu
 quality :: State -> Float
 quality (State [] _) = 0
 quality (State xs y)    | endWolfWon (State xs y) = 999
@@ -17,7 +17,7 @@ quality (State xs y)    | endWolfWon (State xs y) = 999
     where position = findWolf xs
 
 --f pomocnicza
-quality':: Int->Int->Float--quality' Wysyokość Stopnieswobody
+quality':: Int->Int->Float --quality' wysokość stopnie swobody
 quality' a b = (-3)*(fromIntegral a) + (fromIntegral b)
 
 --funkcja zwracająca stopnie swobody danej pozycji (ile ma możliwości ruchu)
@@ -30,7 +30,7 @@ degreeofFreedom:: Position ->Board -> Int
 degreeofFreedom (x,y) bs    | (fieldExists (x,y))&&(isEmpty (bs!!(getInd (x,y) - 1))) = 1 
                             | otherwise = 0
 
---czy pole znajduje sie na planczy
+--czy pole znajduje sie na planszy
 fieldExists:: Position-> Bool
 fieldExists (x,y)   | (1<=x)&&(x<=mapSize)&&(1<=y)&&(y<=mapSize)= True
                     | otherwise = False

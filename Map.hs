@@ -25,7 +25,7 @@ loadMap (x:xs) = case x of
                 _ -> error "Nieprawidlowa mapa"
 loadMap [] = []
 
--- Wypluwa string zawierajcy mape
+-- Wypluwa string zawierajacy mape
 drawMap :: [Field] -> String
 drawMap xs = drawRow xs mapSize mapSize 
 

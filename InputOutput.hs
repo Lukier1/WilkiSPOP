@@ -6,7 +6,7 @@ import Map
 -- moduł obsługujący operacje I/O
 
 saveGameToFile gameBoard = do
- putStrLn "Proszę podać nazwę pliku do zapiania gry:" 
+ putStrLn "Proszę podać nazwę pliku do zapisania gry:" 
  filePath <- getLine
  saveToFile gameBoard filePath
  putStrLn "Zapisano grę do pliku."

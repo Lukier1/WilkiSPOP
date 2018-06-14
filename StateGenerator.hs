@@ -11,7 +11,7 @@ stateGenerateFromState (State board turn) = case turn of
                                                 SheepsTurn ->  generateStateSheepsTurn board 
 -----------
 --Funckje pomocnicze
---Funkcja generujaca wsyzstkie stany dla owiec
+--Funkcja generujaca wszystkie stany dla owiec
 generateStateSheepsTurn :: Board -> [State]
 generateStateSheepsTurn board = generateStateForSheep board 1
 
@@ -28,7 +28,7 @@ generateStateForSheep board index =
                         | otherwise = [(State board WolfTurn)]
     in (genState moveLeftBoard) ++ (genState moveRightBoard) ++ generateStateForSheep board (index+1)
 
---Funkcja generujaca wsyzstkie stany dla wilka
+--Funkcja generujaca wszystkie stany dla wilka
 generateStateWolfTurn :: Board -> [State]
 generateStateWolfTurn board = 
     let (oX, oY) = findWolf board 
@@ -56,7 +56,7 @@ statesPrint [] = ""
 statesPrint (x:xs) = ",\n" ++ statePrint(x) ++ statesPrint(xs)
 
 turnPrint turn =  case turn of
-    WolfTurn -> "Wilacza tura"
+    WolfTurn -> "Wilcza tura"
     SheepsTurn -> "Owcza tura"
 
 statePrint (State board turn) = drawMap board ++ "\nTura:" ++ turnPrint turn
