@@ -83,7 +83,7 @@ startNewGame = do
  runGameMenu startGameState
 
 stopGame lastState = do
- putStr "Zatrzymano grę. By wznowić naciśnij dowolny klawisz.\n"
+ putStrLn "Zatrzymano grę. By wznowić naciśnij enter."
  userKeyboardHit <- getLine
  resumeGame lastState
 
@@ -96,9 +96,8 @@ saveGame (State map turn) = do
  resumeGame (State map turn)
 
 loadSavedGame = do
- putStr "Wczytano zapisaną grę ...\n"
- -- tu będzie wczytanie wcześniej zapisanej gry z pliku po podaniu ścieżki
- resumeGame startGameState -- do wyrzucenia. Wyjaśnienie jak wyżej
+ loadGameFromFile
+ resumeGame startGameState -- do zmiany startGameState na aktualny stan gry z pliku (załadować lastState z pliku)
 
 exitGame = do
  putStr "Dziękujemy za wspólną grę. Do zobaczenia!\n"
